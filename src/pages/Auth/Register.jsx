@@ -4,11 +4,14 @@ import { AuthContext } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router';
 import { auth } from '../../Utils/firebase.init';
+import useAxios from '../../Utils/axios';
+import Swal from 'sweetalert2'
 
 const Register = () => {
        const {createUser,googlePopUp,updateUser,setUser} = use(AuthContext)
       const {register,handleSubmit,formState: { errors }} = useForm()
       const navigate = useNavigate()
+      const instance = useAxios()
       const passwordRegex = /(?=.*[a-z])(?=.*[A-Z]).{6,}/;
        function googleLogin(){
            
@@ -30,6 +33,24 @@ const Register = () => {
 
          createUser(data.email,data.password)
           .then(result =>{
+            const user = {
+              name: data.name,
+              email:data.email,
+              image:data.photoURL,
+            }
+             instance.post("/users",user)
+              .then(()=>{
+                  Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "member has been  registered",
+  showConfirmButton: false,
+  timer: 1500
+}).catch((error) => {
+                
+                toast.error(error.message); 
+            });;
+              })
         console.log(result)
          updateUser(data.name,data.photoURL)
          .then(result =>{
