@@ -13,21 +13,41 @@ const Register = () => {
       const navigate = useNavigate()
       const instance = useAxios()
       const passwordRegex = /(?=.*[a-z])(?=.*[A-Z]).{6,}/;
-       function googleLogin(){
-           
-         
-        googlePopUp().then(result=>{
-          console.log(result)
-          navigate("/")
-  toast.success("Successfully signup in with Google!");
+    
+    function googleLogin(){ 
+       googlePopUp()
+      .then(result => {
+                console.log(result.user);
+                
 
-        })
-        .catch((error)=>{
-  toast.error(error.message); 
+               
+                const userInfo = {
+                    email: result.user.email,
+                    displayName: result.user.displayName,
+                    photoURL: result.user.photoURL
+                }
 
-        })
+                instance.post('/users', userInfo)
+                    .then(() => {
+                      Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "member has been  registered",
+  showConfirmButton: false,
+  timer: 1500
+})
+                           toast("Sucessfully SignUp")
 
+                        navigate(location.state || '/');
+                    })
+
+            })
+            .catch(error => {
+                  toast(error.message)
+
+            })
     }
+
 
     const handleSignup = (data)=>{
 
