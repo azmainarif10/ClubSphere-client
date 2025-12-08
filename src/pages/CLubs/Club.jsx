@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {useQuery} from '@tanstack/react-query'
 import useAxios from '../../Utils/axios';
+import { Link } from 'react-router';
 const Club = () => {
      const instance = useAxios()
        const [category, setCategory] = useState("");
@@ -79,9 +80,9 @@ const Club = () => {
           <p className="text-gray-600 mb-1"><b>Name:</b> {club.clubName}</p>
           <p className="text-gray-600 mb-4"><b>Membership Fee:</b> {club.membershipFee}$</p>
 
-          <button className="mt-auto w-full bg-blue-300 text-white py-2 rounded-lg">
+          <Link to={`/clubs/${club._id}`} className="mt-auto btn w-full bg-blue-300 text-white py-2 rounded-lg">
             View Details
-          </button>
+          </Link>
         </div>
       </div>
     ))}
