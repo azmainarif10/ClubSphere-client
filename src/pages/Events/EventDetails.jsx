@@ -1,13 +1,14 @@
-import React from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import React, { use } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxios from "../../Utils/axios";
 import { useParams } from "react-router";
+import { AuthContext } from "../../context/AuthContext";
+import toast from "react-hot-toast";
 
 const EventDetails = () => {
   const { id } = useParams();
   const instance = useAxios();
-
+  const {user} = use(AuthContext)
   const { data: event, isLoading } = useQuery({
     queryKey: ["event", id],
     queryFn: async () => {
@@ -16,14 +17,56 @@ const EventDetails = () => {
     },
   });
 
-  const { mutate: registerEvent } = useMutation({
-    mutationFn: async () => {
-      const res = await instance.post(`/events/register`, { eventId: id });
+    const registerFreeEvent = useMutation({
+    mutationFn: async (data) => {
+      const res = await instance.post("/event-registrations", data);
       return res.data;
     },
-    onSuccess: () => toast.success("Registered successfully!"),
-    onError: () => toast.error("Failed to register"),
+    onSuccess: () => {
+      toast.success("You have successfully registered for the event!");
+    },
+    onError: () => {
+      toast.error("Something went wrong.");
+    },
   });
+
+  function handleFreeEventRegister() {
+    if (!user) {
+      toast.error("Please login first");
+      return;
+    }
+
+    registerFreeEvent.mutate({
+      eventId: id,
+      userEmail: user.email,
+      status: "registered",
+    });
+  }
+
+  async function  eventPay(event){
+
+  if (!user) {
+    toast.error("Please login first");
+    return;
+  }
+
+
+     const eventInfo = {
+    eventId : id,
+    cost : event.eventFee,
+    email:user?.email,
+    title :event.title,
+
+
+  }
+ 
+   const res =  await instance.post("/event/create-checkout-session",eventInfo);
+        
+  
+   window.location.assign(res.data.url)
+
+}
+  
 
   if (isLoading) return <p className="text-center py-20">Loading...</p>;
 
@@ -56,12 +99,26 @@ const EventDetails = () => {
         )}
       </p>
 
-      <button
-        className="btn bg-blue-300 text-white btn-lg"
-        onClick={() => registerEvent()}
-      >
-        {event.isPaid ? "Pay & Register" : "Register For Free"}
-      </button>
+     
+      {
+  event.isPaid? (
+    <button
+      onClick={() => eventPay(event)}
+      className="bg-blue-300 text-white text-lg font-bold py-2 px-6 rounded"
+    >
+     Pay & Register
+    </button>
+  ) : (
+    <button
+      onClick={handleFreeEventRegister}
+      className="bg-blue-300 text-white text-lg font-bold py-2 px-6 rounded"
+    >
+     Register For Free
+    </button>
+  )
+}
+
+     
     </div>
   );
 };
