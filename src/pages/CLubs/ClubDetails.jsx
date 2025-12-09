@@ -1,14 +1,15 @@
-import React, { use } from 'react';
+import React, {  useContext } from 'react';
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxios from '../../Utils/axios';
 import { useParams } from 'react-router';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../context/AuthContext';
 const ClubDetails = () => {
-    const {user} = use(AuthContext)
+    const {user} = useContext(AuthContext)
+    console.log(user)
     const {id} = useParams()
     const instance = useAxios()
-     const { data: club, isLoading, isError } = useQuery({
+     const { data: club} = useQuery({
     queryKey: ["club", id],
     queryFn: async () => {
       const res = await instance.get(`/clubs/${id}`);
@@ -16,14 +17,10 @@ const ClubDetails = () => {
     },
   });
 
-    const memberShip =  {
-        clubId: id,
-        userEmail: user.email , 
-        status: "active",
-      }
+    
        const joinFreeClub = useMutation({
-    mutationFn: async () => {
-      const res = await instance.post("/memberships",memberShip);
+    mutationFn: async (data) => {
+      const res = await instance.post("/memberships",data);
       return res.data;
     },
     onSuccess: () => {
@@ -33,11 +30,38 @@ const ClubDetails = () => {
       toast.error("Something went wrong.");
     }
   });
+  if (!user){
+  return <div className="text-center py-20">Loading...</div>;
+    } 
+ 
+  if (!club) {
+    return <div className="text-center py-20">Something went wrong!</div>;
+  }
+  
+  function handleJoinFree() {
+  if (!user) {
+    toast.error("Please login first");
+    return;
+  }
+
+  joinFreeClub.mutate({
+    clubId: id,
+    userEmail: user.email,
+    status: "active",
+  });
+}
   async function  handlePay(club){
+
+  if (!user) {
+    toast.error("Please login first");
+    return;
+  }
+
+
      const clubInfo = {
     clubId : id,
     cost : club.membershipFee,
-    email:user.email,
+    email:user?.email,
     clubName :club.clubName,
 
 
@@ -49,13 +73,7 @@ const ClubDetails = () => {
    window.location.assign(res.data.url)
 
 }
- if (isLoading){
-  return <div className="text-center py-20">Loading...</div>;
-    } 
-  if (isError) {
-    return <div className="text-center py-20">Something went wrong!</div>;
-  }
-  
+
    
     return (
        <div>
@@ -97,7 +115,7 @@ const ClubDetails = () => {
     </button>
   ) : (
     <button
-      onClick={() => joinFreeClub.mutate()}
+      onClick={handleJoinFree}
       className="bg-blue-300 text-white text-lg font-bold py-2 px-6 rounded"
     >
       Join Club

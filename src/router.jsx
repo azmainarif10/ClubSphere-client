@@ -6,6 +6,8 @@ import Home from "./pages/Home/Home";
 import Club from "./pages/CLubs/Club";
 import ClubDetails from "./pages/CLubs/ClubDetails";
 import PaymentSuccess from "./pages/payment/paymentSuccess";
+import Events from "./pages/Events/Events";
+import EventDetails from "./pages/Events/EventDetails";
 
  
   const router = createBrowserRouter([
@@ -17,6 +19,8 @@ import PaymentSuccess from "./pages/payment/paymentSuccess";
        { path: "/", element: <Home/> },
        { path: "/clubs", element: <Club /> },
       { path: "/clubs/:id", element: <ClubDetails /> },
+       { path: "/events", element: <Events /> },
+        { path: "/events/:id", element: <EventDetails /> },
        { path: "/login", element: <Login /> },
        { path: "/register", element: <Register /> },
         { path: "/payment-success", element: <PaymentSuccess /> },

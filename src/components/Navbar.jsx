@@ -21,16 +21,18 @@ const Navbar = () => {
         
             <li><Link to="/">Home</Link></li>
              <li><Link to="/clubs">Clubs</Link></li>
+              <li><Link to="/events">Events</Link></li>
             
          
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl">daisyUI</a>
+    <a className="btn btn-ghost text-xl">ClubSphere</a>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
           <li><Link to="/">Home</Link></li>
             <li><Link to="/clubs">Clubs</Link></li>
+             <li><Link to="/events">Events</Link></li>
     </ul>
   </div>
   <div className="navbar-end">
