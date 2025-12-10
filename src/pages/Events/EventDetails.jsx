@@ -19,7 +19,7 @@ const EventDetails = () => {
 
     const registerFreeEvent = useMutation({
     mutationFn: async (data) => {
-      const res = await instance.post("/event-registrations", data);
+      const res = await instance.post("/event-registered", data);
       return res.data;
     },
     onSuccess: () => {
@@ -38,6 +38,7 @@ const EventDetails = () => {
 
     registerFreeEvent.mutate({
       eventId: id,
+      clubId: event.clubId,
       userEmail: user.email,
       status: "registered",
     });
@@ -56,6 +57,7 @@ const EventDetails = () => {
     cost : event.eventFee,
     email:user?.email,
     title :event.title,
+    clubId: event.clubId,
 
 
   }

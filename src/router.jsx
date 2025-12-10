@@ -8,6 +8,7 @@ import ClubDetails from "./pages/CLubs/ClubDetails";
 import PaymentSuccess from "./pages/payment/paymentSuccess";
 import Events from "./pages/Events/Events";
 import EventDetails from "./pages/Events/EventDetails";
+import EventPaymentSuccess from "./pages/payment/EventPaymentSuccess";
 
  
   const router = createBrowserRouter([
@@ -24,6 +25,7 @@ import EventDetails from "./pages/Events/EventDetails";
        { path: "/login", element: <Login /> },
        { path: "/register", element: <Register /> },
         { path: "/payment-success", element: <PaymentSuccess /> },
+         { path: "/event/payment-success", element: <EventPaymentSuccess /> },
      
     ],
   },
