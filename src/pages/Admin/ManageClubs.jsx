@@ -8,9 +8,9 @@ const ManageClubs = () => {
   const instance = useAxios();
 
   const { data: clubs = [], refetch } = useQuery({
-    queryKey: ["ManageClubs"],
+    queryKey: ["Club"],
     queryFn: async () => {
-      const res = await instance.get("/clubs");
+      const res = await instance.get("/admin/clubs");
       return res.data;
     },
   });

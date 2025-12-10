@@ -48,6 +48,7 @@ const ClubDetails = () => {
     clubId: id,
     userEmail: user.email,
     status: "active",
+   
   });
 }
   async function  handlePay(club){

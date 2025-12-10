@@ -58,7 +58,7 @@ const PaymentsPage = () => {
             <p><strong>Amount:</strong> ${p.amount}</p>
             <p><strong>Type:</strong> {p.type}</p>
             <p><strong>Club ID/Event ID:</strong> {p.eventId || p.clubId}</p>
-             <td>{p.createdAt}</td>
+             <p>{p.createdAt}</p>
             <p><strong>Transaction ID:</strong> {p.transactionId}</p>
           </div>
         ))}
