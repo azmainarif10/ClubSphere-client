@@ -9,6 +9,13 @@ import PaymentSuccess from "./pages/payment/paymentSuccess";
 import Events from "./pages/Events/Events";
 import EventDetails from "./pages/Events/EventDetails";
 import EventPaymentSuccess from "./pages/payment/EventPaymentSuccess";
+import PrivateRoute from "./routes/PrivateRoute";
+import DashboardLayout from "./layouts/DashboardLayout";
+import RoleRoute from "./routes/RoleRoute";
+import AdminHome from "./pages/Admin/AdminHome";
+import ManageUsers from "./pages/Admin/ManageUsers";
+import ManageClubs from "./pages/Admin/ManageClubs";
+import AllPayments from "./pages/Admin/AllPayments";
 
  
   const router = createBrowserRouter([
@@ -25,10 +32,25 @@ import EventPaymentSuccess from "./pages/payment/EventPaymentSuccess";
        { path: "/login", element: <Login /> },
        { path: "/register", element: <Register /> },
         { path: "/payment-success", element: <PaymentSuccess /> },
-         { path: "/event/payment-success", element: <EventPaymentSuccess /> },
+        { path: "/event/payment-success", element: <EventPaymentSuccess/> },
      
     ],
   },
+
+   {
+    path:"/dashboard",
+    element:(<PrivateRoute>
+      <DashboardLayout></DashboardLayout>
+    </PrivateRoute>),
+    children:[
+     { path: "admin",element: (  <RoleRoute allowed={["admin"]}> <AdminHome /></RoleRoute> ),  },
+      { path: "manage-users", element: <RoleRoute allowed={["admin"]}><ManageUsers /></RoleRoute> },
+      { path: "manage-clubs", element: <RoleRoute allowed={["admin"]}><ManageClubs /></RoleRoute> },
+      { path: "payments", element: <RoleRoute allowed={["admin"]}><AllPayments /></RoleRoute> },
+    ]
+   }
+    
+  
   ])
 
   export default router
