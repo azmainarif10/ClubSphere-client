@@ -1,24 +1,24 @@
-import React from "react";
+import React, { use } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../Utils/axios";
 import { Link } from "react-router";
 import { FaCheckCircle, FaTimesCircle, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
+import { AuthContext } from "../../context/AuthContext";
 
 const MyMemberships = () => {
   const instance = useAxios();
 
-  // Fetch clubs where the user has active membership
+  const {user} = use(AuthContext)
   const { data: memberships = [] } = useQuery({
     queryKey: ["MyMemberships"],
     queryFn: async () => {
-      const res = await instance.get("/member/my-clubs");
+      const res = await instance.get(`/memberships?email=${user.email}`);
       return res.data;
     },
   });
 
   return (
     <div className="p-2 sm:p-4">
-      {/* Desktop Table */}
       <div className="hidden sm:block overflow-x-auto rounded-xl shadow">
         <table className="table table-zebra">
           <thead className="bg-base-200">
@@ -37,16 +37,13 @@ const MyMemberships = () => {
               <tr key={m._id}>
                 <th>{index + 1}</th>
 
-                {/* Club Name */}
                 <td className="font-bold">{m.clubName}</td>
 
-                {/* Location */}
                 <td className="flex items-center gap-2">
                   <FaMapMarkerAlt className="text-red-500" />
                   {m.location}
                 </td>
 
-                {/* Membership Status */}
                 <td>
                   <span
                     className={`badge badge-md ${
@@ -59,15 +56,13 @@ const MyMemberships = () => {
                   </span>
                 </td>
 
-                {/* Expiry */}
                 <td className="flex items-center gap-2">
                   <FaCalendarAlt />
                   {new Date(m.expiryDate).toLocaleDateString()}
                 </td>
 
-                {/* Details */}
                 <td>
-                  <Link to={`/club/${m.clubId}`}>
+                  <Link to={`/clubs/${m.clubId}`}>
                     <button className="btn btn-sm btn-info">View</button>
                   </Link>
                 </td>
@@ -77,7 +72,6 @@ const MyMemberships = () => {
         </table>
       </div>
 
-      {/* Mobile Card View */}
       <div className="sm:hidden space-y-4 mt-4">
         {memberships.map((m) => (
           <div
@@ -110,7 +104,7 @@ const MyMemberships = () => {
               </p>
             </div>
 
-            <Link to={`/club/${m.clubId}`}>
+            <Link to={`/clubs/${m.clubId}`}>
               <button className="btn btn-primary btn-sm mt-3 w-full">
                 View Club
               </button>
