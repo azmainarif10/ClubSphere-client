@@ -20,6 +20,7 @@ import MemberHome from "./pages/Member/MemberHome";
 import MyMemberships from "./pages/Member/MyMemberships";
 import PaymentHistory from "./pages/Member/PaymentHistory";
 import MyEvents from "./pages/Member/MyEvents";
+import MyClubs from "./pages/ClubManager/MyClubs";
 
  
   const router = createBrowserRouter([
@@ -58,6 +59,10 @@ import MyEvents from "./pages/Member/MyEvents";
       { path: "my-memberships", element: <RoleRoute allowed={["member"]}><MyMemberships /></RoleRoute> },
       { path: "my-events", element: <RoleRoute allowed={["member"]}><MyEvents /></RoleRoute> },
       { path: "payment-history", element: <RoleRoute allowed={["member"]}><PaymentHistory /></RoleRoute> },
+
+
+       { path: "my-clubs", element: <RoleRoute allowed={["clubManager"]}><MyClubs /></RoleRoute> },
+
     ]
    }
     
