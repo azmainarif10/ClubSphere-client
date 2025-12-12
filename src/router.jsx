@@ -23,6 +23,8 @@ import MyEvents from "./pages/Member/MyEvents";
 import MyClubs from "./pages/ClubManager/MyClubs";
 import ClubMembers from "./pages/ClubManager/ClubMembers";
 import EventsManagement from "./pages/ClubManager/EventsManagement";
+import EventRegistrations from "./pages/ClubManager/EventRegistrations";
+import ManagerHome from "./pages/ClubManager/ManagerHome";
 
  
   const router = createBrowserRouter([
@@ -66,6 +68,10 @@ import EventsManagement from "./pages/ClubManager/EventsManagement";
        { path: "my-clubs", element: <RoleRoute allowed={["clubManager"]}><MyClubs /></RoleRoute> },
         { path: "club-members", element: <RoleRoute allowed={["clubManager"]}><ClubMembers /></RoleRoute> },
          { path: "events", element: <RoleRoute allowed={["clubManager"]}><EventsManagement /></RoleRoute> },
+           { path: "event-registrations", element: <RoleRoute allowed={["clubManager"]}><EventRegistrations /></RoleRoute> },
+           { path: "event-registrations", element: <RoleRoute allowed={["clubManager"]}><EventRegistrations /></RoleRoute> },
+            { path: "manager", element: <RoleRoute allowed={["clubManager"]}><ManagerHome /></RoleRoute> },
+
 
     ]
    }
