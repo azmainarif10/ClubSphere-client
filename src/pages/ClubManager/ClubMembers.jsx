@@ -1,24 +1,24 @@
 import React, { useContext } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import useAxios from "../../Utils/axios";
 import { AuthContext } from "../../context/AuthContext";
+import useSecureAxios from "../../Utils/secureAxios";
+import Load from "../Load/Load";
 
 const ClubMembers = () => {
   const { user } = useContext(AuthContext);
-  const instance = useAxios();
-
-  const { data: members = [], refetch } = useQuery({
+  const secureInstance = useSecureAxios()
+  const { data: members = [], refetch,isLoading} = useQuery({
     queryKey: ["clubMembers", user?.email],
     queryFn: async () => {
-      const res = await instance.get(`/manager/club-members?email=${user.email}`);
+      const res = await secureInstance.get(`/manager/club-members?email=${user.email}`);
       return res.data;
     },
   });
 
   const expireMembershipMutation = useMutation({
     mutationFn: async ({ id }) => {
-      const res = await instance.patch(`/membership/${id}/status`, { status: "expired" });
+      const res = await secureInstance.patch(`/membership/${id}/status`, { status: "expired" });
       return res.data;
     },
     onSuccess: () => {
@@ -40,7 +40,9 @@ const ClubMembers = () => {
       }
     });
   };
-
+  if(isLoading){
+    return <Load></Load>
+  }
   return (
     <div className="p-4 md:p-6">
       <h2 className="text-xl md:text-2xl font-bold mb-4">Club Members</h2>

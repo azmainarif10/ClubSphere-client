@@ -5,10 +5,11 @@ import { FiUserX } from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAxios from "../../Utils/axios";
 import Load from "../Load/Load";
+import useSecureAxios from "../../Utils/secureAxios";
 
 const ManageUsers = () => {
   const instance = useAxios();
-
+  const secureInstance = useSecureAxios()
   const { data: users = [], refetch,isLoading } = useQuery({
     queryKey: ["UserManagement"],
     queryFn: async () => {
@@ -19,7 +20,7 @@ const ManageUsers = () => {
 
   const updateRole = useMutation({
     mutationFn: async ({ id, role }) => {
-      const res = await instance.patch(`/user/update-role/${id}`, { role });
+      const res = await secureInstance.patch(`/user/update-role/${id}`, { role });
       return { data: res.data, role };
     },
     onSuccess: ({ role }) => {

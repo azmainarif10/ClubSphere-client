@@ -5,11 +5,13 @@ import { useParams } from 'react-router';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../context/AuthContext';
 import Load from '../Load/Load';
+import useSecureAxios from '../../Utils/secureAxios';
 const ClubDetails = () => {
     const {user} = useContext(AuthContext)
     console.log(user)
     const {id} = useParams()
     const instance = useAxios()
+    const secureInstance = useSecureAxios()
      const { data: club} = useQuery({
     queryKey: ["club", id],
     queryFn: async () => {
@@ -69,7 +71,7 @@ const ClubDetails = () => {
 
   }
  
-   const res =  await instance.post("/create-checkout-session",clubInfo);
+   const res =  await secureInstance.post("/create-checkout-session",clubInfo);
         
   
    window.location.assign(res.data.url)

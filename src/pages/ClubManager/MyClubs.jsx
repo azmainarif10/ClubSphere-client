@@ -4,9 +4,11 @@ import useAxios from "../../Utils/axios";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../context/AuthContext";
+import useSecureAxios from "../../Utils/secureAxios";
 
 const MyClubs = () => {
   const instance = useAxios();
+  const secureInstance = useSecureAxios()
   const { user } = useContext(AuthContext);
   const [editingClub, setEditingClub] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
@@ -23,7 +25,7 @@ const MyClubs = () => {
 
   const createClubMutation = useMutation({
     mutationFn: async (newClub) => {
-      const res = await instance.post("/clubs", newClub);
+      const res = await secureInstance.post("/clubs", newClub);
       return res.data;
     },
     onSuccess: () => {
@@ -37,7 +39,7 @@ const MyClubs = () => {
     mutationFn: async ({ id, data }) => {
 
      
-      const res = await instance.patch(`/clubs/${id}`, data);
+      const res = await secureInstance.patch(`/clubs/${id}`, data);
       return res.data;
     },
     onSuccess: () => {
@@ -53,7 +55,7 @@ const MyClubs = () => {
 
     mutationFn: async (id) => {
 
-      const res = await instance.delete(`/clubs/${id}`);
+      const res = await secureInstance.delete(`/clubs/${id}`);
 
       return res.data;
 

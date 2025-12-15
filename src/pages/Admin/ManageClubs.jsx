@@ -2,23 +2,22 @@ import React from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { FaCheckCircle, FaTimesCircle, FaChartPie } from "react-icons/fa";
-import useAxios from "../../Utils/axios";
 import Load from "../Load/Load";
+import useSecureAxios from "../../Utils/secureAxios";
 
 const ManageClubs = () => {
-  const instance = useAxios();
-
+  const secureInstance = useSecureAxios()
   const { data: clubs = [], refetch ,isLoading} = useQuery({
     queryKey: ["Club"],
     queryFn: async () => {
-      const res = await instance.get("/admin/clubs");
+      const res = await secureInstance.get("/admin/clubs");
       return res.data;
     },
   });
 
   const updateStatus = useMutation({
     mutationFn: async ({ id, status }) => {
-      const res = await instance.patch(`/club/update-status/${id}`, { status });
+      const res = await secureInstance.patch(`/club/update-status/${id}`, { status });
       return { data: res.data, status };
     },
     onSuccess: ({ status }) => {

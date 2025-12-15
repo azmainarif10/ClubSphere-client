@@ -4,19 +4,22 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAxios from "../../Utils/axios";
 import { AuthContext } from "../../context/AuthContext";
+import useSecureAxios from "../../Utils/secureAxios";
+import Load from "../Load/Load";
 
 const EventsManagement = () => {
   const { user } = useContext(AuthContext);
   const instance = useAxios();
+  const secureInstance = useSecureAxios()
   const [editingEvent, setEditingEvent] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
 
   const { register, handleSubmit, reset } = useForm();
 
-  const { data: events = [], refetch } = useQuery({
+  const { data: events = [], refetch,isLoading } = useQuery({
     queryKey: ["managerEvents", user?.email],
     queryFn: async () => {
-      const res = await instance.get(`/manager/events?managerEmail=${user?.email}`);
+      const res = await secureInstance.get(`/manager/events?managerEmail=${user?.email}`);
       return res.data;
     },
   });
@@ -35,7 +38,7 @@ const EventsManagement = () => {
 
   const updateEventMutation = useMutation({
     mutationFn: async ({ id, data }) => {
-      const res = await instance.patch(`/manager/events/${id}`, data);
+      const res = await secureInstance.patch(`/manager/events/${id}`, data);
       return res.data;
     },
     onSuccess: () => {
@@ -47,7 +50,7 @@ const EventsManagement = () => {
 
   const deleteEventMutation = useMutation({
     mutationFn: async (id) => {
-      const res = await instance.delete(`/manager/events/${id}`);
+      const res = await secureInstance.delete(`/manager/events/${id}`);
       return res.data;
     },
     onSuccess: () => {
@@ -83,6 +86,10 @@ const EventsManagement = () => {
     setEditingEvent(null);
     reset();
   };
+
+  if(isLoading){
+    return <Load></Load>
+  }
 
   return (
       <div className="p-4 md:p-6">

@@ -5,10 +5,12 @@ import { useParams } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import Load from "../Load/Load";
+import useSecureAxios from "../../Utils/secureAxios";
 
 const EventDetails = () => {
   const { id } = useParams();
   const instance = useAxios();
+  const secureInstance = useSecureAxios()
   const {user} = use(AuthContext)
   const { data: event, isLoading } = useQuery({
     queryKey: ["event", id],
@@ -63,7 +65,7 @@ const EventDetails = () => {
 
   }
  
-   const res =  await instance.post("/event/create-checkout-session",eventInfo);
+   const res =  await secureInstance.post("/event/create-checkout-session",eventInfo);
         
   
    window.location.assign(res.data.url)

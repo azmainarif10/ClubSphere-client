@@ -1,16 +1,16 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../Utils/axios";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
 import Load from "../Load/Load";
+import useSecureAxios from "../../Utils/secureAxios";
 
 const AdminHome = () => {
-  const instance = useAxios();
+  const secureInstance = useSecureAxios()
 
   const { data, isLoading } = useQuery({
     queryKey: ["adminRaw"],
     queryFn: async () => {
-      const res = await instance.get("/admin/data");
+      const res = await secureInstance.get("/admin/data");
       return res.data;
     },
   });

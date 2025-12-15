@@ -1,24 +1,26 @@
 import React, { use } from 'react';
-import useAxios from '../../Utils/axios';
 import { AuthContext } from '../../context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
+import useSecureAxios from '../../Utils/secureAxios';
+import Load from '../Load/Load';
 
 const EventRegistrations = () => {
-   const instance = useAxios()
+   const secureInstance = useSecureAxios()
    const {user} = use(AuthContext)
-       const { data: myEvents = [] } = useQuery({
+       const { data: myEvents = [] ,isLoading} = useQuery({
     queryKey: ["myEvents", user?.email],
     queryFn: async () => {
-      const res = await instance.get(`/manager/event-registration?email=${user.email}`);
+      const res = await secureInstance.get(`/manager/event-registration?email=${user.email}`);
       return res.data;
     },
   });
-
+  if(isLoading){
+    return <Load></Load>
+  }
     return (
        <div className="p-6">
   <h2 className="text-2xl font-bold mb-4">Event Registrations</h2>
 
-  {/* Desktop Table */}
   <div className="overflow-x-auto hidden md:block">
     <table className="table table-zebra w-full">
       <thead>

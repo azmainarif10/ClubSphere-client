@@ -1,15 +1,14 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../Utils/axios";
 import Load from "../Load/Load";
+import useSecureAxios from "../../Utils/secureAxios";
 
 const PaymentsPage = () => {
-  const instance = useAxios();
-
+   const secureInstance = useSecureAxios()
   const { data: payments = [], isLoading } = useQuery({
     queryKey: ["payments"],
     queryFn: async () => {
-      const res = await instance.get("/payments");
+      const res = await secureInstance.get("/payments");
       return res.data;
     },
   });

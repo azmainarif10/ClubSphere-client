@@ -1,24 +1,25 @@
 import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../Utils/axios";
 import { AuthContext } from "../../context/AuthContext";
 import { FaBuilding, FaUsers, FaCalendarAlt, FaDollarSign } from "react-icons/fa";
+import useSecureAxios from "../../Utils/secureAxios";
+import Load from "../Load/Load";
 
 const ManagerHome = () => {
   const { user } = useContext(AuthContext);
-  const instance = useAxios();
+  const secureInstance = useSecureAxios()
 
   const { data: stats = {}, isLoading } = useQuery({
     queryKey: ["managerOverview", user?.email],
     queryFn: async () => {
-      const res = await instance.get(`/manager/overview?email=${user.email}`);
+      const res = await secureInstance.get(`/manager/overview?email=${user.email}`);
       return res.data;
     },
   });
 
   if (isLoading)
     return (
-      <p className="text-center mt-10 text-gray-400 font-semibold">Loading...</p>
+     <Load></Load>
     );
 
   const cards = [
