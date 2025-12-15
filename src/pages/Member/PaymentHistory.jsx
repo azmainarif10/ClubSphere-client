@@ -2,6 +2,7 @@ import React, { use } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../Utils/axios";
 import { AuthContext } from "../../context/AuthContext";
+import Load from "../Load/Load";
 
 const PaymentHistory = () => {
   const instance = useAxios();
@@ -14,7 +15,7 @@ const PaymentHistory = () => {
     },
   });
 
-  if (isLoading) return <p>Loading payments...</p>;
+  if (isLoading) return <Load></Load>;
 
   return (
     <div className="p-2 sm:p-4 space-y-4">

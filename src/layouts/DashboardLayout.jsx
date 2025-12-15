@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { use, useEffect } from 'react';
 import useRole from '../Utils/useRole';
-import { Link, Outlet } from 'react-router';
+import { Link, Outlet, useNavigate } from 'react-router';
 import Navbar from '../components/Navbar';
 import AdminMenu from '../components/Siderbar/AdminMenu';
 import ManagerMenu from '../components/Siderbar/ManagerMenu';
 import MemberMenu from '../components/Siderbar/MemberMenu';
+import { AuthContext } from '../context/AuthContext';
+import Load from '../pages/Load/Load';
 
 const DashboardLayout = () => {
-    const {role} = useRole()
+    const {role,isLoading} = useRole()
+    const {loading} =use(AuthContext)
+    const navigate = useNavigate()
+  useEffect(() => {
+    if (!isLoading && !loading) {
+      if (role === 'admin') navigate('/dashboard/admin', { replace: true });
+      else if (role === 'clubManager') navigate('/dashboard/manager', { replace: true });
+      else if (role === 'member') navigate('/dashboard/member', { replace: true });
+    }
+  }, [role, isLoading, loading, navigate]);
+
+
+    if(loading || isLoading){
+      return <Load></Load>
+    }
     return (
       
           <div className="drawer lg:drawer-open">

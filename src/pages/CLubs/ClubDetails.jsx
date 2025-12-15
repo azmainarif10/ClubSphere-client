@@ -4,6 +4,7 @@ import useAxios from '../../Utils/axios';
 import { useParams } from 'react-router';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../context/AuthContext';
+import Load from '../Load/Load';
 const ClubDetails = () => {
     const {user} = useContext(AuthContext)
     console.log(user)
@@ -31,11 +32,11 @@ const ClubDetails = () => {
     }
   });
   if (!user){
-  return <div className="text-center py-20">Loading...</div>;
+  return <Load></Load>;
     } 
  
   if (!club) {
-    return <div className="text-center py-20">Something went wrong!</div>;
+    return <Load></Load>;
   }
   
   function handleJoinFree() {

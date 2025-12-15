@@ -4,19 +4,22 @@ import useAxios from "../../Utils/axios";
 import { Link } from "react-router";
 import { FaCheckCircle, FaTimesCircle, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
+import Load from "../Load/Load";
 
 const MyMemberships = () => {
   const instance = useAxios();
 
   const {user} = use(AuthContext)
-  const { data: memberships = [] } = useQuery({
+  const { data: memberships = [] ,isLoading} = useQuery({
     queryKey: ["MyMemberships"],
     queryFn: async () => {
       const res = await instance.get(`/memberships?email=${user.email}`);
       return res.data;
     },
   });
-
+  if(isLoading){
+    return Load
+  }
   return (
     <div className="p-2 sm:p-4">
       <div className="hidden sm:block overflow-x-auto rounded-xl shadow">

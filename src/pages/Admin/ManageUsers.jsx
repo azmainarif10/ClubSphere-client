@@ -4,11 +4,12 @@ import { FaShieldAlt, FaUserShield, FaUserTag } from "react-icons/fa";
 import { FiUserX } from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAxios from "../../Utils/axios";
+import Load from "../Load/Load";
 
 const ManageUsers = () => {
   const instance = useAxios();
 
-  const { data: users = [], refetch } = useQuery({
+  const { data: users = [], refetch,isLoading } = useQuery({
     queryKey: ["UserManagement"],
     queryFn: async () => {
       const res = await instance.get("/users");
@@ -33,6 +34,9 @@ const ManageUsers = () => {
     },
   });
 
+  if(isLoading){
+    return <Load></Load>
+  }
   return (
     <div className="p-2 sm:p-4">
       <div className="hidden sm:block overflow-x-auto rounded-xl shadow">

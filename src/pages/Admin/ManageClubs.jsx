@@ -3,11 +3,12 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { FaCheckCircle, FaTimesCircle, FaChartPie } from "react-icons/fa";
 import useAxios from "../../Utils/axios";
+import Load from "../Load/Load";
 
 const ManageClubs = () => {
   const instance = useAxios();
 
-  const { data: clubs = [], refetch } = useQuery({
+  const { data: clubs = [], refetch ,isLoading} = useQuery({
     queryKey: ["Club"],
     queryFn: async () => {
       const res = await instance.get("/admin/clubs");
@@ -31,6 +32,9 @@ const ManageClubs = () => {
       refetch();
     },
   });
+  if(isLoading){
+    return <Load></Load>
+  }
 
   return (
     <div className="p-2 sm:p-4">

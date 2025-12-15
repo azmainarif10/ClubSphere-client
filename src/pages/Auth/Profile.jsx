@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../context/AuthContext';
+import Load from '../Load/Load';
 
 const Profile = () => {
   const { user, loading, setUser, updateUser } = useContext(AuthContext);
@@ -31,7 +32,7 @@ const Profile = () => {
     }
   }
 
-  if (loading) return  <p>Loading</p>;
+  if (loading) return  <Load></Load>;
 
   if (!user) {
     return (

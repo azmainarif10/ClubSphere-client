@@ -4,6 +4,7 @@ import useAxios from "../../Utils/axios";
 import { useParams } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
+import Load from "../Load/Load";
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -70,7 +71,7 @@ const EventDetails = () => {
 }
   
 
-  if (isLoading) return <p className="text-center py-20">Loading...</p>;
+  if (isLoading) return <Load></Load>;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">

@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../Utils/axios";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
+import Load from "../Load/Load";
 
 const AdminHome = () => {
   const instance = useAxios();
@@ -14,7 +15,7 @@ const AdminHome = () => {
     },
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Load></Load>;
 
   const { users, clubs, memberships, events, payments } = data;
 

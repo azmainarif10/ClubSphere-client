@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../Utils/axios";
 import { Link } from "react-router";
+import Load from "../Load/Load";
 
 const Events = () => {
     const instance = useAxios();
@@ -23,7 +24,6 @@ const Events = () => {
         <div className="max-w-7xl mx-auto px-4 py-10">
             <h1 className="text-3xl font-bold mb-8 text-center">Upcoming Events</h1>
 
-            {/* Search + Filter + Sort */}
             <div className="flex flex-wrap gap-4 mb-8 justify-between">
                 <input
                     type="text"
@@ -54,9 +54,8 @@ const Events = () => {
                 </select>
             </div>
 
-            {isLoading && <p className="text-center">Loading...</p>}
+            {isLoading && <Load></Load>}
 
-            {/* Events Grid */}
             <div
                 className="  grid   grid-cols-1  sm:grid-cols-2  md:grid-cols-3  lg:grid-cols-4    gap-6   "
             >

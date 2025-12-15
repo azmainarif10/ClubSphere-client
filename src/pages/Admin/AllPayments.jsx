@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../Utils/axios";
+import Load from "../Load/Load";
 
 const PaymentsPage = () => {
   const instance = useAxios();
@@ -13,7 +14,7 @@ const PaymentsPage = () => {
     },
   });
 
-  if (isLoading) return <p>Loading payments...</p>;
+  if (isLoading) return <Load></Load>;
 
   return (
     <div className="p-2 sm:p-4 space-y-4">

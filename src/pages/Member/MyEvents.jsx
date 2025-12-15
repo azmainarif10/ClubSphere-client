@@ -4,6 +4,7 @@ import useAxios from "../../Utils/axios";
 import { Link } from "react-router";
 import { FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
+import Load from "../Load/Load";
 
 const MyEvents = () => {
   const instance = useAxios();
@@ -17,7 +18,7 @@ const MyEvents = () => {
   });
 
   if (isLoading) {
-    return <p>Loading your events...</p>;
+    return <Load></Load>;
   }
 
   return (

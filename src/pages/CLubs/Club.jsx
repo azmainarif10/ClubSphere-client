@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import {useQuery} from '@tanstack/react-query'
 import useAxios from '../../Utils/axios';
 import { Link } from 'react-router';
+import Load from '../Load/Load';
 const Club = () => {
      const instance = useAxios()
        const [category, setCategory] = useState("");
      const [searchTerm,setSearchTerm] = useState('')
-     const {  data: clubs=[] } = useQuery({
+     const {  data: clubs=[] ,isLoading} = useQuery({
     queryKey: ['clubs',searchTerm, category],
     queryFn: async () =>{
 
@@ -19,6 +20,10 @@ const Club = () => {
     return  res.data
     }
   })
+ 
+  if(isLoading){
+    return <Load></Load>
+  }
 
   const filteredClubs = clubs.filter(club=>club.clubName.toLowerCase().includes(searchTerm.toLowerCase()))
     
