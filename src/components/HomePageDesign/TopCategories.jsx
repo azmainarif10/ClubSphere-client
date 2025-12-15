@@ -41,7 +41,7 @@ export default function TopCategories() {
     <div className="lg:px-20">
       <div className="w-full py-16">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl font-semibold text-blue-300 mb-10">
+          <h2 className="text-3xl font-semibold text-center text-blue-300 mb-10">
             Explore top categories
           </h2>
 

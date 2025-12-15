@@ -33,6 +33,9 @@ const FeaturedClubs = () => {
 
   return (
     <div className="py-10">
+
+    < p className="text-3xl text-center text-blue-300 font-bold py-6">Featured Clubs</p>
+
       <Swiper
         key={clubs.length}
         autoplay={{
