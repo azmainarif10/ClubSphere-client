@@ -36,9 +36,9 @@ import Profile from "./pages/Auth/Profile";
     children: [
        { path: "/", element: <Home/> },
        { path: "/clubs", element: <Club /> },
-      { path: "/clubs/:id", element: <ClubDetails /> },
+      { path: "/clubs/:id", element: <PrivateRoute><ClubDetails /></PrivateRoute>  },
        { path: "/events", element: <Events /> },
-        { path: "/events/:id", element: <EventDetails /> },
+        { path: "/events/:id", element: <PrivateRoute><EventDetails /></PrivateRoute> },
        { path: "/login", element: <Login /> },
        { path: "/register", element: <Register /> },
         { path: "/payment-success", element: <PaymentSuccess /> },

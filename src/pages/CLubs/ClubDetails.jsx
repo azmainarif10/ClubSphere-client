@@ -33,9 +33,7 @@ const ClubDetails = () => {
       toast.error("Something went wrong.");
     }
   });
-  if (!user){
-  return <Load></Load>;
-    } 
+   
  
   if (!club) {
     return <Load></Load>;
