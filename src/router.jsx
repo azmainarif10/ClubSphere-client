@@ -26,6 +26,7 @@ import EventsManagement from "./pages/ClubManager/EventsManagement";
 import EventRegistrations from "./pages/ClubManager/EventRegistrations";
 import ManagerHome from "./pages/ClubManager/ManagerHome";
 import Profile from "./pages/Auth/Profile";
+import Error from "./pages/Error/Error";
 
  
   const router = createBrowserRouter([
@@ -44,6 +45,7 @@ import Profile from "./pages/Auth/Profile";
         { path: "/payment-success", element: <PaymentSuccess /> },
         { path: "/event/payment-success", element: <EventPaymentSuccess/> },
          { path: "/profile", element: <Profile/> },
+         { path: "*", element: <Error/> },
      
     ],
   },

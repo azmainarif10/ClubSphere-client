@@ -2,11 +2,23 @@ import React, { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../context/AuthContext';
 import Load from '../Load/Load';
+import { useQuery } from '@tanstack/react-query';
+import useAxios from '../../Utils/axios';
 
 const Profile = () => {
   const { user, loading, setUser, updateUser } = useContext(AuthContext);
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
+  const instance = useAxios()
+ 
+  const { data: roleData, isLoading: roleLoading } = useQuery({
+  queryKey: ["userRole", user?.email],
+  enabled: !!user?.email,
+  queryFn: async () => {
+    const res = await instance.get(`/user/${user.email}/role/update-profile`);
+    return res.data;
+  },
+});
 
   useEffect(() => {
     if (user) {
@@ -62,6 +74,12 @@ const Profile = () => {
         <div className="bg-base-200 w-full text-center h-1/2 flex flex-col justify-center items-center">
           <p className="mt-16 text-lg font-medium">{user.displayName}</p>
           <p className="mt-2 text-lg font-medium">{user.email}</p>
+
+          {!roleLoading && (
+  <p className="mt-2 text-lg font-medium capitalize">
+    Role: {roleData?.role}
+  </p>
+)}
         </div>
       </div>
 

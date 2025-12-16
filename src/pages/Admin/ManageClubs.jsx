@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import { FaCheckCircle, FaTimesCircle, FaChartPie } from "react-icons/fa";
+import { FaCheckCircle, FaTimesCircle, FaChartPie, FaClock } from "react-icons/fa";
 import Load from "../Load/Load";
 import useSecureAxios from "../../Utils/secureAxios";
 
@@ -58,19 +58,22 @@ const ManageClubs = () => {
                 <td className="font-bold">{club.clubName}</td>
                 <td>{club.managerEmail}</td>
 
-                <td>
-                  <span
-                    className={`badge badge-md ${
-                      club.status === "approved"
-                        ? "bg-green-600 text-white"
-                        : club.status === "rejected"
-                        ? "badge-error"
-                        : "bg-yellow-200 text-yellow-800"
-                    }`}
-                  >
-                    {club.status}
-                  </span>
-                </td>
+               <td>
+  <span
+    className={`inline-flex items-center gap-1 badge badge-md ${
+      club.status === "approved"
+        ? "bg-green-600 text-white"
+        : club.status === "rejected"
+        ? "badge-error"
+        : "bg-yellow-200 text-yellow-800"
+    }`}
+  >
+    {club.status === "approved" && <FaCheckCircle />}
+    {club.status === "rejected" && <FaTimesCircle />}
+    {club.status === "pending" && <FaClock />}
+    {club.status}
+  </span>
+</td>
 
                 <td>${club.membershipFee}</td>
 
@@ -94,13 +97,32 @@ const ManageClubs = () => {
                     Reject  <FaTimesCircle />
                     </button>
 
-                    <button
-                      className="btn btn-sm text-blue-600"
-                      onClick={() => Swal.fire("Stats", "Coming soon!", "info")}
-                    >
-                     View <FaChartPie />
-                    </button>
-                  </div>
+                                       <button
+  className="btn btn-sm text-blue-600"
+  onClick={async () => {
+    try {
+      const res = await secureInstance.get(`/club/${club._id}/stats`);
+      const stats = res.data;
+
+      Swal.fire({
+        title: `Stats for ${club.clubName}`,
+        html: `
+          <p><strong>Members:</strong> ${stats.memberCount}</p>
+          <p><strong>Events:</strong> ${stats.eventCount}</p>
+        `,
+        icon: "info",
+      });
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "Failed to fetch stats", "error");
+    }
+  }}
+>
+  View <FaChartPie />
+</button>
+          
+             </div>
+             
                 </td>
               </tr>
             ))}
@@ -159,12 +181,29 @@ const ManageClubs = () => {
                 <FaTimesCircle /> Reject
               </button>
 
-              <button
-                className="btn btn-sm text-blue-600"
-                onClick={() => Swal.fire("Stats", "Coming soon!", "info")}
-              >
-                <FaChartPie /> Stats
-              </button>
+               <button
+  className="btn btn-sm text-blue-600"
+  onClick={async () => {
+    try {
+      const res = await secureInstance.get(`/club/${club._id}/stats`);
+      const stats = res.data;
+
+      Swal.fire({
+        title: `Stats for ${club.clubName}`,
+        html: `
+          <p><strong>Members:</strong> ${stats.memberCount}</p>
+          <p><strong>Events:</strong> ${stats.eventCount}</p>
+        `,
+        icon: "info",
+      });
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "Failed to fetch stats", "error");
+    }
+  }}
+>
+  View <FaChartPie />
+</button>
             </div>
           </div>
         ))}

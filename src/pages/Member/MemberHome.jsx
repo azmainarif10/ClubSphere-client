@@ -31,8 +31,8 @@ const MemberHome = () => {
 
   return (
     <div className="p-4 space-y-8">
-      <div className="bg-gradient-to-r from-blue-400 to-purple-500 text-white rounded-xl p-6 shadow-lg text-center transition-transform transform hover:scale-105">
-        <h2 className="text-3xl font-bold">Welcome, {user.name}!</h2>
+      <div className="bg-gradient-to-r from-blue-300 to-white rounded-xl p-6 shadow-lg text-center transition-transform transform hover:scale-105">
+        <h2 className="text-3xl font-bold">Welcome, {user.displayName}!</h2>
         <p className="text-sm opacity-90 mt-2">
           Here’s a quick overview of your club and event activity.
         </p>

@@ -1,6 +1,6 @@
 import React, { use, useEffect } from 'react';
 import useRole from '../Utils/useRole';
-import { Link, Outlet, useNavigate } from 'react-router';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router';
 import Navbar from '../components/Navbar';
 import AdminMenu from '../components/Siderbar/AdminMenu';
 import ManagerMenu from '../components/Siderbar/ManagerMenu';
@@ -12,14 +12,18 @@ const DashboardLayout = () => {
     const {role,isLoading} = useRole()
     const {loading} =use(AuthContext)
     const navigate = useNavigate()
-  useEffect(() => {
-    if (!isLoading && !loading) {
-      if (role === 'admin') navigate('/dashboard/admin', { replace: true });
-      else if (role === 'clubManager') navigate('/dashboard/manager', { replace: true });
-      else if (role === 'member') navigate('/dashboard/member', { replace: true });
-    }
-  }, [role, isLoading, loading, navigate]);
-
+    const location = useLocation()
+ useEffect(() => {
+        if (!isLoading && !loading && location.pathname === '/dashboard') {
+            if (role === 'admin') {
+                navigate('/dashboard/admin', { replace: true });
+            } else if (role === 'clubManager') {
+                navigate('/dashboard/manager', { replace: true });
+            } else if (role === 'member') {
+                navigate('/dashboard/member', { replace: true });
+            }
+        }
+    }, [role, isLoading, loading, navigate, location.pathname]); 
 
     if(loading || isLoading){
       return <Load></Load>

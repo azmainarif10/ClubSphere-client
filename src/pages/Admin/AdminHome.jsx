@@ -1,10 +1,12 @@
-import React from "react";
+import React, { use } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
 import Load from "../Load/Load";
 import useSecureAxios from "../../Utils/secureAxios";
+import { AuthContext } from "../../context/AuthContext";
 
 const AdminHome = () => {
+  const {user} = use(AuthContext)
   const secureInstance = useSecureAxios()
 
   const { data, isLoading } = useQuery({
@@ -37,8 +39,13 @@ const AdminHome = () => {
   }));
 
   return (
-    <div className="p-4 space-y-6">
-
+    <div className="p-4 space-y-6 ">
+            <div className=" bg-gradient-to-r from-blue-300 to-white rounded-xl p-6 shadow-lg text-center transition-transform transform hover:scale-105">
+        <h2 className="text-3xl font-bold">Welcome Admin, {user.displayName}!</h2>
+        <p className="text-sm opacity-90 mt-2">
+          Here’s a quick overview of your club and event activity.
+        </p>
+      </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         <div className="stat bg-base-200 rounded-xl p-4">
           <h3 className="text-xl font-bold">Users</h3>
