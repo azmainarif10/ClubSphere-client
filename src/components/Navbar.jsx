@@ -34,7 +34,7 @@ const Navbar = () => {
          
       </ul>
     </div>
-     <img  className='h-15 w-20' src='/Logo.png'></img>
+     <img  className='h-15 w-20 hidden md:block' src='/Logo.png'></img>
     <a className="btn btn-ghost text-xl">ClubSphere</a>
   </div>
   <div className="navbar-center hidden lg:flex">

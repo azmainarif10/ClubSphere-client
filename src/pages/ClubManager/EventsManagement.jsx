@@ -2,20 +2,27 @@ import React, { useState, useContext } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import useAxios from "../../Utils/axios";
 import { AuthContext } from "../../context/AuthContext";
 import useSecureAxios from "../../Utils/secureAxios";
 import Load from "../Load/Load";
 
 const EventsManagement = () => {
   const { user } = useContext(AuthContext);
-  const instance = useAxios();
   const secureInstance = useSecureAxios()
   const [editingEvent, setEditingEvent] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
 
   const { register, handleSubmit, reset } = useForm();
 
+ const { data: myClubs = [] } = useQuery({
+  queryKey: ["myClubs", user?.email],
+  queryFn: async () => {
+    const res = await secureInstance.get(`/my-clubs?email=${user?.email}`);
+    return res.data;
+  },
+});
+
+   
   const { data: events = [], refetch,isLoading } = useQuery({
     queryKey: ["managerEvents", user?.email],
     queryFn: async () => {
@@ -26,7 +33,7 @@ const EventsManagement = () => {
 
   const createEventMutation = useMutation({
     mutationFn: async (newEvent) => {
-      const res = await instance.post("/events", newEvent);
+      const res = await secureInstance.post("/events", newEvent);
       return res.data;
     },
     onSuccess: () => {
@@ -60,7 +67,10 @@ const EventsManagement = () => {
   });
 
   const handleCreate = (data) => {
-    createEventMutation.mutate({ ...data, managerEmail: user.email });
+    createEventMutation.mutate({ 
+      ...data,
+       managerEmail: user.email,
+       });
   };
 
   const handleUpdate = (data) => {
@@ -207,10 +217,20 @@ const EventsManagement = () => {
           >
             <input {...register("title")} className="input input-bordered" placeholder="Title" />
             <input {...register("location")} className="input input-bordered" placeholder="Location" />
+            <input {...register("eventsImage")} className="input input-bordered" placeholder="Banner Image URL" />
+
             <input type="date" {...register("eventDate")} className="input input-bordered" placeholder="Event Date" />
-            <input type="checkbox" {...register("isPaid")} className="checkbox" />
+           <p className="text-gray-700">Is Paid : <input type="checkbox" {...register("isPaid")} className="checkbox"  /></p> 
             <input {...register("eventFee")} className="input input-bordered" placeholder="Event Fee" />
             <input {...register("maxAttendees")} className="input input-bordered" placeholder="Max Attendees" />
+            <select {...register("clubId")} className="select select-bordered col-span-2">
+     <option value="">Select Club</option>
+      {myClubs.map(club => (
+       <option key={club._id} value={club._id}>
+          {club.clubName}
+       </option>
+      ))}
+                  </select>
 
             <textarea {...register("description")} className="textarea textarea-bordered col-span-2" placeholder="Description" />
 

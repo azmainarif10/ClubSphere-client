@@ -5,8 +5,8 @@ import { AuthContext } from './AuthContext';
 
 
 const AuthProvider = ({children}) => {
-      
-    const googleProvider = new GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
+
     const [category,setCategory] =useState("All")
     const [user,setUser] = useState(null)
     const [loading,setLoading] = useState(true)
@@ -38,9 +38,9 @@ const AuthProvider = ({children}) => {
     return signOut(auth)
   }
  
-const googlePopUp = () =>{
+const googlePop = () =>{
 
-    return signInWithPopup(auth,googleProvider)
+    return signInWithPopup(auth,provider)
 }
 
 
@@ -53,7 +53,7 @@ const updateUser = (name,url) =>{
 
     return (
         <div>
-            <AuthContext value={{category,setCategory,setLoading,updateUser,user,setUser,loading,googlePopUp,signUser,createUser,logOut}}>
+            <AuthContext value={{category,setCategory,setLoading,updateUser,user,setUser,loading,googlePop,signUser,createUser,logOut}}>
                 {children}
             </AuthContext>
         </div>

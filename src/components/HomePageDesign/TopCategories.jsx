@@ -2,6 +2,8 @@ import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../Utils/axios";
 import { toast } from "react-hot-toast"; 
+import { use } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const categories = [
   { title: "Community/Volunteering", accent: "bg-green-200", icon: "🌱" },
@@ -17,6 +19,7 @@ const categories = [
 export default function TopCategories() {
   const navigate = useNavigate();
   const instance = useAxios();
+  const {user} = use(AuthContext)
 
   const { data: clubs = [] } = useQuery({
     queryKey: ["clubs"],
@@ -27,6 +30,11 @@ export default function TopCategories() {
   });
 
   const handleCategoryClick = (category) => {
+      if (!user) {
+    toast.error("Please login to explore clubs");
+    navigate("/login"); 
+    return;
+  }
     const filteredClubs = clubs.filter((c) => c.category === category);
 
     if (filteredClubs.length > 0) {

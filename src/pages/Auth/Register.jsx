@@ -8,14 +8,14 @@ import useAxios from '../../Utils/axios';
 import Swal from 'sweetalert2'
 
 const Register = () => {
-       const {createUser,googlePopUp,updateUser,setUser} = use(AuthContext)
+       const {createUser,googlePop,updateUser,setUser} = use(AuthContext)
       const {register,handleSubmit,formState: { errors }} = useForm()
       const navigate = useNavigate()
       const instance = useAxios()
       const passwordRegex = /(?=.*[a-z])(?=.*[A-Z]).{6,}/;
     
     function googleLogin(){ 
-       googlePopUp()
+       googlePop()
       .then(result => {
                 console.log(result.user);
                 
@@ -66,6 +66,8 @@ const Register = () => {
   title: "member has been  registered",
   showConfirmButton: false,
   timer: 1500
+
+  
 }).catch((error) => {
                 
                 toast.error(error.message); 
