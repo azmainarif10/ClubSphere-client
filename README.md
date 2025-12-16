@@ -1,8 +1,10 @@
 
+## Project Name :
+ ClubSphere
 
-## 🚀 Project Overview
+## 🚀 Project Purpose
 
-ClubSphere is a web application that helps users discover, join, and manage local clubs (photography, tech, sports, literature, volunteering, etc.).
+ClubSphere is a web application that helps users discover, join, and manage local clubs (photography, tech, sports, literature, volunteering, etc.) and participate in the events under the specefic clubs .
 
 
 ## 🛠 Tech Stack
@@ -14,7 +16,8 @@ ClubSphere is a web application that helps users discover, join, and manage loca
 * **Stripe** (Payments)
 * **Vercel** (Deployment)
 
----
+## Pakages : 
+axios,carousel,dotenv,firebase,framer-motion,lottie-react,react,react-dom,react-hook-form,react-hot-toast,react-icons,react-responsive-carousel,react-router,recharts,tanstack/react-query,stripe,sweetalert2,swiper
 
 ## 🔐 Authentication & Authorization
 
@@ -26,13 +29,10 @@ ClubSphere is a web application that helps users discover, join, and manage loca
   * `admin`
   * `club_manager`
 
----
 
-## 📦 Main Features
 
 ### 👥 User Features
 
-* Register & login (Firebase)
 * View clubs by category
 * Join clubs
 * Register for events
@@ -51,8 +51,6 @@ ClubSphere is a web application that helps users discover, join, and manage loca
 * View platform statistics
 * Manage users & clubs
 
-## Admin Email: atib@gmail.com 
-## Admin Password : 1234Aa
 ## Live Link : https://clubsphere-61f0c.web.app
 ## 👤 Author
 
