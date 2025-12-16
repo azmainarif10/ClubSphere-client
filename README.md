@@ -53,7 +53,7 @@ ClubSphere is a web application that helps users discover, join, and manage loca
 
 ## Admin Email: atib@gmail.com 
 ## Admin Password : 1234Aa
-## Live Link : 
+## Live Link : https://clubsphere-61f0c.web.app
 ## 👤 Author
 
 **Azmain Bin Arif**
